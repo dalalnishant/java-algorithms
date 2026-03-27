@@ -68,6 +68,12 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 
+# ===========================
+# Logs
+# ===========================
+logs/
+*.log
+
 # macOS
 .DS_Store
 .AppleDouble

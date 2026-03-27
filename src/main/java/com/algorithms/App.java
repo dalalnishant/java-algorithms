@@ -1,28 +1,21 @@
 package com.algorithms;
 
+import java.util.Arrays;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.algorithms.sorting.Selection;
 
-/**
- * Hello world!
- *
- */
 public class App {
+    private static final Logger log = LoggerFactory.getLogger(App.class);
+
     public static void main(String[] args) {
         Selection selection = new Selection();
         int[] list = { 100, 99, 98, 97, 96 };
 
         selection.sort(list);
 
-        for (int i = 0; i < list.length; i++) {
-            if (i == 0) {
-                System.out.print("{ ");
-            }
-            System.out.print(list[i]);
-            if (i != list.length - 1) {
-                System.out.print(", ");
-            } else {
-                System.out.print(" }\n");
-            }
-        }
+        log.info("Selection sort {}", Arrays.toString(list));
     }
 }
