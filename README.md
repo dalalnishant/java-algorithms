@@ -52,6 +52,12 @@ mvn clean install
 
 ## Algorithms Covered
 
+### Sorting
+
+| Algorithm | Best Case | Average Case | Worst Case | Space |
+|-----------|-----------|--------------|------------|-------|
+| Selection Sort | O(n²) | O(n²) | O(n²) | O(1) |
+
 > 🚧 Coming soon — algorithms will be added progressively.
 
 ## License
