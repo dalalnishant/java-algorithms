@@ -8,6 +8,10 @@ public class Selection {
      * @param arr
      */
     public void sort(int[] arr) {
+        if(arr == null) {
+            throw new IllegalArgumentException("Array cannot be null");
+        }
+
         for (int i = 0; i < arr.length - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < arr.length; j++) {
