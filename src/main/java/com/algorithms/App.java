@@ -8,52 +8,78 @@ import org.slf4j.LoggerFactory;
 
 import com.algorithms.sorting.Bubble;
 import com.algorithms.sorting.Selection;
+import com.algorithms.sorting.SortAlgorithm;
 
 public class App {
     private static final Logger log = LoggerFactory.getLogger(App.class);
 
+    private static final int SELECTION_SORT = 1;
+    private static final int BUBBLE_SORT = 2;
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        try (Scanner scanner = new Scanner(System.in)) {
+            log.info("Enter number to apply sort:");
+            log.info("1. Selection sort");
+            log.info("2. Bubble sort");
 
-        log.info("Enter number to apply sort:\n");
-        log.info("1. Selection sort\n");
-        log.info("2. Bubble sort\n");
+            if (!scanner.hasNextInt()) {
+                log.error("Invalid input. Please enter a number.");
+                return;
+            }
+            int input = scanner.nextInt();
 
-        int input = scanner.nextInt();
-        if (input < 1 || input > 2) {
-            log.error("Invalid choice: {}. Please enter 1 or 2.", input);
-            scanner.close();
-            return;
+            log.info("You chose {}, thanks", input);
+
+            SortAlgorithm algorithm = getAlgorithm(input);
+            if (algorithm == null) {
+                log.error("Invalid choice: {}. Please enter {} or {}.",
+                        input, SELECTION_SORT, BUBBLE_SORT);
+                return;
+            }
+
+            int[] list = readArray(scanner);
+            if (list == null)
+                return;
+            log.info("You have entered {}", Arrays.toString(list));
+
+            algorithm.sort(list);
+            log.info("Sorted result: {}", Arrays.toString(list));
+        }
+    }
+
+    private static SortAlgorithm getAlgorithm(int choice) {
+        switch (choice) {
+            case SELECTION_SORT:
+                return new Selection();
+            case BUBBLE_SORT:
+                return new Bubble();
+            default:
+                return null;
+        }
+    }
+
+    private static int[] readArray(Scanner scanner) {
+        log.info("How many numbers do you want to sort?");
+        if (!scanner.hasNextInt()) {
+            log.error("Invalid input. Please enter a number.");
+            return null;
+        }
+        int size = scanner.nextInt();
+
+        if (size <= 0) {
+            log.error("Size must be a positive number. Got: {}", size);
+            return null;
         }
 
-        log.info("You chose {}, thanks", input);
-
-        log.info("How many numbers do you want to sort?");
-        int size = scanner.nextInt();
         int[] list = new int[size];
-        log.info("Awesome! Now enter numbers you want to sort");
+        log.info("Awesome! Now enter {} numbers to sort:", size);
         for (int i = 0; i < size; i++) {
+            if (!scanner.hasNextInt()) {
+                log.error("Invalid input at position {}. Please enter a number.", i + 1);
+                return null;
+            }
             list[i] = scanner.nextInt();
         }
-        log.info("You have entered {}", Arrays.toString(list));
-
-        switch (input) {
-            case 1:
-                Selection selection = new Selection();
-                selection.sort(list);
-                log.info("Sorted using Selection sort: {}", Arrays.toString(list));
-                break;
-
-            case 2:
-                Bubble bubble = new Bubble();
-                bubble.sort(list);
-                log.info("Sorted using Bubble sort: {}", Arrays.toString(list));
-                break;
-
-            default:
-                log.warn("Invalid choice: {}", input);
-                break;
-        }
-        scanner.close();
+        return list;
     }
 }
