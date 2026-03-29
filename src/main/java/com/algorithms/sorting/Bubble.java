@@ -1,6 +1,6 @@
 package com.algorithms.sorting;
 
-public class Selection {
+public class Bubble {
 
     /**
      * Sorts an integer array in ascending order.
@@ -17,16 +17,18 @@ public class Selection {
         }
 
         for (int i = 0; i < arr.length - 1; i++) {
-            int minIndex = i;
-            for (int j = i + 1; j < arr.length; j++) {
-                if (arr[minIndex] > arr[j]) {
-                    minIndex = j;
+            boolean swapped = false;
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                    swapped = true;
                 }
             }
-            if (minIndex != i) {
-                int min = arr[minIndex];
-                arr[minIndex] = arr[i];
-                arr[i] = min;
+
+            if (!swapped) {
+                break;
             }
         }
     }
