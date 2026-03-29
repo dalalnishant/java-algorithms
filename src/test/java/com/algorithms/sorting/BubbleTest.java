@@ -14,11 +14,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Bubble Sort")
 class BubbleTest {
 
-    private Bubble bubble;
+    private SortAlgorithm sorter;
 
     @BeforeEach
     void setUp() {
-        bubble = new Bubble();
+        sorter = new Bubble();
     }
 
     // -------------------------------------------------------------------------
@@ -32,14 +32,14 @@ class BubbleTest {
         @Test
         @DisplayName("Throws IllegalArgumentException when array is null")
         void throwsOnNullArray() {
-            assertThrows(IllegalArgumentException.class, () -> bubble.sort(null));
+            assertThrows(IllegalArgumentException.class, () -> sorter.sort(null));
         }
 
         @Test
         @DisplayName("Returns immediately for empty array without throwing")
         void emptyArrayIsNoOp() {
             int[] arr = {};
-            assertDoesNotThrow(() -> bubble.sort(arr));
+            assertDoesNotThrow(() -> sorter.sort(arr));
             assertArrayEquals(new int[]{}, arr);
         }
 
@@ -47,7 +47,7 @@ class BubbleTest {
         @DisplayName("Returns immediately for single-element array without throwing")
         void singleElementIsNoOp() {
             int[] arr = {42};
-            assertDoesNotThrow(() -> bubble.sort(arr));
+            assertDoesNotThrow(() -> sorter.sort(arr));
             assertArrayEquals(new int[]{42}, arr);
         }
     }
@@ -64,7 +64,7 @@ class BubbleTest {
         @DisplayName("Two elements already in order")
         void twoElementsOrdered() {
             int[] arr = {1, 2};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 2}, arr);
         }
 
@@ -72,7 +72,7 @@ class BubbleTest {
         @DisplayName("Many elements already in ascending order")
         void manyElementsOrdered() {
             int[] arr = {1, 2, 3, 4, 5, 6, 7};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 2, 3, 4, 5, 6, 7}, arr);
         }
     }
@@ -89,7 +89,7 @@ class BubbleTest {
         @DisplayName("Two elements in reverse order")
         void twoElementsReversed() {
             int[] arr = {2, 1};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 2}, arr);
         }
 
@@ -97,7 +97,7 @@ class BubbleTest {
         @DisplayName("Many elements in reverse order")
         void manyElementsReversed() {
             int[] arr = {9, 7, 5, 3, 1};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 3, 5, 7, 9}, arr);
         }
     }
@@ -114,7 +114,7 @@ class BubbleTest {
         @DisplayName("Small unsorted array is sorted correctly")
         void smallUnsorted() {
             int[] arr = {5, 3, 8, 1, 9, 2};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 2, 3, 5, 8, 9}, arr);
         }
 
@@ -122,7 +122,7 @@ class BubbleTest {
         @DisplayName("Larger unsorted array is sorted correctly")
         void largerUnsorted() {
             int[] arr = {64, 34, 25, 12, 22, 11, 90};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{11, 12, 22, 25, 34, 64, 90}, arr);
         }
     }
@@ -139,7 +139,7 @@ class BubbleTest {
         @DisplayName("Array with all identical elements remains unchanged")
         void allIdentical() {
             int[] arr = {7, 7, 7, 7};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{7, 7, 7, 7}, arr);
         }
 
@@ -147,7 +147,7 @@ class BubbleTest {
         @DisplayName("Array with some duplicates is sorted correctly")
         void someDuplicates() {
             int[] arr = {4, 2, 4, 1, 2};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 2, 2, 4, 4}, arr);
         }
 
@@ -155,7 +155,7 @@ class BubbleTest {
         @DisplayName("Array with all duplicates except one outlier")
         void oneOutlier() {
             int[] arr = {5, 5, 5, 1, 5};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 5, 5, 5, 5}, arr);
         }
     }
@@ -172,7 +172,7 @@ class BubbleTest {
         @DisplayName("Array with all negative values is sorted correctly")
         void allNegative() {
             int[] arr = {-3, -1, -7, -5};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{-7, -5, -3, -1}, arr);
         }
 
@@ -180,7 +180,7 @@ class BubbleTest {
         @DisplayName("Array mixing negative and positive values is sorted correctly")
         void mixedSignValues() {
             int[] arr = {3, -2, 0, -5, 4, 1};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{-5, -2, 0, 1, 3, 4}, arr);
         }
 
@@ -188,7 +188,7 @@ class BubbleTest {
         @DisplayName("Array containing zeros is sorted correctly")
         void containsZeros() {
             int[] arr = {0, -1, 0, 2, 0};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{-1, 0, 0, 0, 2}, arr);
         }
     }
@@ -205,7 +205,7 @@ class BubbleTest {
         @DisplayName("Array containing Integer.MIN_VALUE and Integer.MAX_VALUE")
         void integerExtremes() {
             int[] arr = {Integer.MAX_VALUE, 0, Integer.MIN_VALUE};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{Integer.MIN_VALUE, 0, Integer.MAX_VALUE}, arr);
         }
 
@@ -213,7 +213,7 @@ class BubbleTest {
         @DisplayName("Two-element array with min and max values")
         void minMaxTwoElements() {
             int[] arr = {Integer.MAX_VALUE, Integer.MIN_VALUE};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{Integer.MIN_VALUE, Integer.MAX_VALUE}, arr);
         }
     }
@@ -231,7 +231,7 @@ class BubbleTest {
         @DisplayName("Interleaved duplicates are grouped and ordered correctly")
         void interleavedDuplicates() {
             int[] arr = {3, 1, 3, 1, 3};
-            bubble.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[]{1, 1, 3, 3, 3}, arr);
         }
     }
@@ -254,7 +254,7 @@ class BubbleTest {
     @MethodSource("unsortedPairs")
     @DisplayName("Parameterised: various arrays sorted correctly")
     void parameterisedSort(int[][] pair) {
-        bubble.sort(pair[0]);
+        sorter.sort(pair[0]);
         assertArrayEquals(pair[1], pair[0]);
     }
 
@@ -267,7 +267,7 @@ class BubbleTest {
     void lengthUnchanged() {
         int[] arr = {5, 3, 1, 4, 2};
         int originalLength = arr.length;
-        bubble.sort(arr);
+        sorter.sort(arr);
         assertEquals(originalLength, arr.length);
     }
 
@@ -280,7 +280,7 @@ class BubbleTest {
     void sortsInPlace() {
         int[] arr = {3, 1, 2};
         int[] ref = arr;        // same reference
-        bubble.sort(arr);
+        sorter.sort(arr);
         assertSame(ref, arr);   // reference unchanged
         assertArrayEquals(new int[]{1, 2, 3}, arr);
     }

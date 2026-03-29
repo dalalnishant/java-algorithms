@@ -11,11 +11,11 @@ import static org.junit.jupiter.api.Assertions.*;
 @DisplayName("Selection Sort")
 class SelectionTest {
 
-    private Selection selection;
+    private SortAlgorithm sorter;
 
     @BeforeEach
     void setUp() {
-        selection = new Selection();
+        sorter = new Selection();
     }
 
     // -------------------------------------------------------------------------
@@ -29,14 +29,14 @@ class SelectionTest {
         @Test
         @DisplayName("Throws IllegalArgumentException when array is null")
         void throwsOnNullArray() {
-            assertThrows(IllegalArgumentException.class, () -> selection.sort(null));
+            assertThrows(IllegalArgumentException.class, () -> sorter.sort(null));
         }
 
         @Test
         @DisplayName("Returns immediately for empty array without throwing")
         void emptyArrayIsNoOp() {
             int[] arr = {};
-            assertDoesNotThrow(() -> selection.sort(arr));
+            assertDoesNotThrow(() -> sorter.sort(arr));
             assertArrayEquals(new int[] {}, arr);
         }
 
@@ -44,7 +44,7 @@ class SelectionTest {
         @DisplayName("Returns immediately for single-element array without throwing")
         void singleElementIsNoOp() {
             int[] arr = { 42 };
-            assertDoesNotThrow(() -> selection.sort(arr));
+            assertDoesNotThrow(() -> sorter.sort(arr));
             assertArrayEquals(new int[] { 42 }, arr);
         }
     }
@@ -61,7 +61,7 @@ class SelectionTest {
         @DisplayName("Two elements already in order")
         void twoElementsOrdered() {
             int[] arr = { 1, 2 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 2 }, arr);
         }
 
@@ -69,7 +69,7 @@ class SelectionTest {
         @DisplayName("Many elements already in ascending order")
         void manyElementsOrdered() {
             int[] arr = { 1, 2, 3, 4, 5, 6, 7 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 2, 3, 4, 5, 6, 7 }, arr);
         }
     }
@@ -86,7 +86,7 @@ class SelectionTest {
         @DisplayName("Two elements in reverse order")
         void twoElementsReversed() {
             int[] arr = { 2, 1 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 2 }, arr);
         }
 
@@ -94,7 +94,7 @@ class SelectionTest {
         @DisplayName("Many elements in reverse order")
         void manyElementsReversed() {
             int[] arr = { 9, 7, 5, 3, 1 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 3, 5, 7, 9 }, arr);
         }
     }
@@ -111,7 +111,7 @@ class SelectionTest {
         @DisplayName("Small unsorted array is sorted correctly")
         void smallUnsorted() {
             int[] arr = { 5, 3, 8, 1, 9, 2 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 2, 3, 5, 8, 9 }, arr);
         }
 
@@ -119,7 +119,7 @@ class SelectionTest {
         @DisplayName("Larger unsorted array is sorted correctly")
         void largerUnsorted() {
             int[] arr = { 64, 25, 12, 22, 11, 90, 34 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 11, 12, 22, 25, 34, 64, 90 }, arr);
         }
     }
@@ -136,7 +136,7 @@ class SelectionTest {
         @DisplayName("Array with all identical elements remains unchanged")
         void allIdentical() {
             int[] arr = { 7, 7, 7, 7 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 7, 7, 7, 7 }, arr);
         }
 
@@ -144,7 +144,7 @@ class SelectionTest {
         @DisplayName("Array with some duplicates is sorted correctly")
         void someDuplicates() {
             int[] arr = { 4, 2, 4, 1, 2 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 2, 2, 4, 4 }, arr);
         }
 
@@ -152,7 +152,7 @@ class SelectionTest {
         @DisplayName("Array with all duplicates except one outlier")
         void oneOutlier() {
             int[] arr = { 5, 5, 5, 1, 5 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 5, 5, 5, 5 }, arr);
         }
     }
@@ -169,7 +169,7 @@ class SelectionTest {
         @DisplayName("Array with all negative values is sorted correctly")
         void allNegative() {
             int[] arr = { -3, -1, -7, -5 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { -7, -5, -3, -1 }, arr);
         }
 
@@ -177,7 +177,7 @@ class SelectionTest {
         @DisplayName("Array mixing negative and positive values is sorted correctly")
         void mixedSignValues() {
             int[] arr = { 3, -2, 0, -5, 4, 1 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { -5, -2, 0, 1, 3, 4 }, arr);
         }
 
@@ -185,7 +185,7 @@ class SelectionTest {
         @DisplayName("Array containing zeros is sorted correctly")
         void containsZeros() {
             int[] arr = { 0, -1, 0, 2, 0 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { -1, 0, 0, 0, 2 }, arr);
         }
     }
@@ -202,7 +202,7 @@ class SelectionTest {
         @DisplayName("Array containing Integer.MIN_VALUE and Integer.MAX_VALUE")
         void integerExtremes() {
             int[] arr = { Integer.MAX_VALUE, 0, Integer.MIN_VALUE };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { Integer.MIN_VALUE, 0, Integer.MAX_VALUE }, arr);
         }
 
@@ -210,7 +210,7 @@ class SelectionTest {
         @DisplayName("Two-element array with min and max values")
         void minMaxTwoElements() {
             int[] arr = { Integer.MAX_VALUE, Integer.MIN_VALUE };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { Integer.MIN_VALUE, Integer.MAX_VALUE }, arr);
         }
     }
@@ -228,7 +228,7 @@ class SelectionTest {
         @DisplayName("Interleaved duplicates are grouped and ordered correctly")
         void interleavedDuplicates() {
             int[] arr = { 3, 1, 3, 1, 3 };
-            selection.sort(arr);
+            sorter.sort(arr);
             assertArrayEquals(new int[] { 1, 1, 3, 3, 3 }, arr);
         }
     }
@@ -250,7 +250,7 @@ class SelectionTest {
     @MethodSource("unsortedPairs")
     @DisplayName("Parameterised: various arrays sorted correctly")
     void parameterisedSort(int[][] pair) {
-        selection.sort(pair[0]);
+        sorter.sort(pair[0]);
         assertArrayEquals(pair[1], pair[0]);
     }
 
@@ -263,7 +263,7 @@ class SelectionTest {
     void lengthUnchanged() {
         int[] arr = { 5, 3, 1, 4, 2 };
         int originalLength = arr.length;
-        selection.sort(arr);
+        sorter.sort(arr);
         assertEquals(originalLength, arr.length);
     }
 
@@ -276,7 +276,7 @@ class SelectionTest {
     void sortsInPlace() {
         int[] arr = { 3, 1, 2 };
         int[] ref = arr;
-        selection.sort(arr);
+        sorter.sort(arr);
         assertSame(ref, arr);
         assertArrayEquals(new int[] { 1, 2, 3 }, arr);
     }

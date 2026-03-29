@@ -1,20 +1,13 @@
 package com.algorithms.sorting;
 
-public class Bubble {
+public class Bubble extends SortAlgorithm {
 
-    /**
-     * Sorts an integer array in ascending order.
-     * 
-     * @param arr
-     */
+    @Override
     public void sort(int[] arr) {
-        if (arr == null) {
-            throw new IllegalArgumentException("Array cannot be null");
-        }
+        validate(arr);
 
-        if (arr.length <= 1) {
+        if (arr.length <= 1)
             return;
-        }
 
         for (int i = 0; i < arr.length - 1; i++) {
             boolean swapped = false;
